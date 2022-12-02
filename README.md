@@ -29,7 +29,7 @@ Your app is ready to be deployed!
 
 See the section about deployment for more information.
 
-### `Live Appllication`
+### `Live Application`
 
 Test the app live on this url https://celadon-liger-73df72.netlify.app/
 
