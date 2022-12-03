@@ -1,8 +1,9 @@
 import React, { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import BreadCrumbs from "./components/BreadCrumbs";
-import Loader from "./components/loader/Loader";
 import { ToastProvider } from "react-toast-notifications";
+import Loader from "./components/loader/Loader";
+import NavBar from "./components/navbar/NavBar";
+
 const Log = React.lazy(() => import("./modules/Logger/Logger"));
 
 const AppRoutes = () => {
@@ -10,15 +11,11 @@ const AppRoutes = () => {
     <>
       <Suspense fallback={<Loader />}>
         <ToastProvider>
-          <BreadCrumbs />
+          <NavBar />
           <Routes>
-            <Route
-              exact
-              index
-              path="/"
-              element={<Navigate to="/administration/logger" />}
-            />
-            <Route index path="/administration/logger" element={<Log />} />
+            <Route exact index path="/" element={<Navigate to="/administration/logger" />} />
+            <Route exact path="/administration" element={<Navigate to="/administration/logger" />} />
+            <Route exact path="/administration/logger" element={<Log />} />
           </Routes>
         </ToastProvider>
       </Suspense>

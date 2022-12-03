@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import { fetchLoggersListing } from "./actions/loggerActions";
-import LoggerTable from "./LoggerTable";
+import LoggerPage from "./LoggerPage";
 
 const Logger = () => {
   const [loggerListing, setLoggerListing] = useState(null);
@@ -32,7 +32,7 @@ const Logger = () => {
 
   return (
     <div data-testid="logger-1" className="">
-      <LoggerTable loggerListing={loggerListing} />
+      <LoggerPage loggerListing={loggerListing} />
     </div>
   );
 };

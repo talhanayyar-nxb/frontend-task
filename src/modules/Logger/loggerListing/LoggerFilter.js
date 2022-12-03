@@ -4,7 +4,7 @@ import {
   dropdownForActionType,
   dropdownForApplicationType,
   removeUnderScores,
-} from "../../services/services";
+} from "../../../services/services";
 
 export function LoggerFilter({ loggerListing, handleFilters, setFilters }) {
   const [employeeName, setEmployeeName] = useState("");

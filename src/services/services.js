@@ -157,7 +157,7 @@ export const renderArrow = (sorted) => {
   return <FaArrowDown />;
 };
 
-export const handleFilterData = (filters = {}, data) => {
+export const handleDataFiltered = (filters = {}, data) => {
   if (Object.keys(filters)) {
     return data?.filter((item) => {
       return Object.keys(filters).every((key) => {
