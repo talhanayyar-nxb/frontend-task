@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import "../../App.css";
 import {
@@ -14,7 +14,7 @@ import {
 } from "../../services/services";
 import { LoggerFilter } from "./LoggerFilter";
 
-const LoggerTable = ({ rawData }) => {
+const LoggerTable = ({ loggerListing }) => {
   const [currentItems, setCurrentItems] = useState([]);
   const [filteredRows, setFilteredRows] = useState([]);
   const [pageCount, setPageCount] = useState(0);
@@ -28,24 +28,26 @@ const LoggerTable = ({ rawData }) => {
   };
 
   useEffect(() => {
-    if (rawData) {
-      const filteredItems = handleFilterData(filters, rawData);
+    if (loggerListing) {
+      const filteredItems = handleFilterData(filters, loggerListing);
       setFilteredRows([...filteredItems]);
     }
-  }, [rawData, JSON.stringify(filters)]);
+  }, [loggerListing, JSON.stringify(filters)]);
 
   useEffect(() => {
     if (filteredRows?.length) {
       const endOffset = itemOffset + itemsPerPage;
-      const curItems = filteredRows.slice(itemOffset, endOffset);
-      setCurrentItems([...curItems]);
+      const currentLogs = filteredRows.slice(itemOffset, endOffset);
+      setCurrentItems([...currentLogs]);
       setPageCount(Math.ceil(filteredRows.length / itemsPerPage));
+    } else {
+      setCurrentItems([]);
     }
   }, [filteredRows, itemOffset]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % rawData?.length;
+    const newOffset = (event.selected * itemsPerPage) % loggerListing?.length;
     setItemOffset(newOffset);
   };
 
@@ -55,7 +57,7 @@ const LoggerTable = ({ rawData }) => {
         filters={filters}
         setFilters={setFilters}
         handleFilters={handleFilters}
-        loggerListingFiltered={rawData}
+        loggerListing={loggerListing}
       />
       <div className="shadow">
         <table className="table mt-5">
@@ -171,20 +173,22 @@ const LoggerTable = ({ rawData }) => {
           </tbody>
         </table>
         {currentItems && currentItems.length > 0 ? (
-          <ReactPaginate
-            breakLabel="..."
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={5}
-            pageCount={pageCount}
-            renderOnZeroPageCount={null}
-            containerClassName="pagination mt-3 pb-3"
-            pageLinkClassName="page-num"
-            previousLinkClassName="page-num"
-            nextLinkClassName="page-num"
-            activeLinkClassName="active"
-          />
+          !(currentItems.length < 10) && (
+            <ReactPaginate
+              breakLabel="..."
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={5}
+              pageCount={pageCount}
+              renderOnZeroPageCount={null}
+              containerClassName="pagination mt-3 pb-3"
+              pageLinkClassName="page-num"
+              previousLinkClassName="page-num"
+              nextLinkClassName="page-num"
+              activeLinkClassName="active"
+            />
+          )
         ) : (
-          "No results found"
+          <div>No results found</div>
         )}
       </div>
     </div>

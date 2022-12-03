@@ -1,15 +1,27 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { Suspense } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import BreadCrumbs from "./components/BreadCrumbs";
-import Logger from "./modules/Logger/Logger";
+import Loader from "./components/loader/Loader";
+import { ToastProvider } from "react-toast-notifications";
+const Log = React.lazy(() => import("./modules/Logger/Logger"));
 
 const AppRoutes = () => {
   return (
     <>
-      <BreadCrumbs />
-      <Routes>
-        <Route index path="/" element={<Logger />} />
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        <ToastProvider>
+          <BreadCrumbs />
+          <Routes>
+            <Route
+              exact
+              index
+              path="/"
+              element={<Navigate to="/administration/logger" />}
+            />
+            <Route index path="/administration/logger" element={<Log />} />
+          </Routes>
+        </ToastProvider>
+      </Suspense>
     </>
   );
 };
