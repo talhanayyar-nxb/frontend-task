@@ -17,6 +17,7 @@ export function LoggerFilter({ loggerListing, handleFilters, setFilters }) {
   const [applicationTypeOptions, setApplicationTypeOptions] = useState([]);
 
   useEffect(() => {
+    // populates the dropdown options with unique values from within the listing
     dropdownForActionType(loggerListing, setActionTypeOptions);
     dropdownForApplicationType(loggerListing, setApplicationTypeOptions);
   }, [loggerListing]);
@@ -30,9 +31,12 @@ export function LoggerFilter({ loggerListing, handleFilters, setFilters }) {
       !fromDate &&
       !toDate
     ) {
+      // set filters to empty in case of no filters selected
       setFilters({});
       return;
     }
+    
+    // prepares the filter with every incoming search filter
     handleFilters({
       ...(employeeName && { employeeName }),
       ...(applicationId && { applicationId }),
@@ -43,6 +47,7 @@ export function LoggerFilter({ loggerListing, handleFilters, setFilters }) {
     });
   };
 
+  // called when delete all filters button is clicked
   const resetFilter = () => {
     setEmployeeName('');
     setActionType('');

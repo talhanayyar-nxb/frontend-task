@@ -157,27 +157,24 @@ export const renderArrow = (sorted) => {
   return <FaArrowDown />;
 };
 
-export const handleDataFiltered = (filters = {}, data) => {
+export const handleDataFiltered = (filters, listing) => {
   if (Object.keys(filters)) {
-    return data?.filter((item) => {
+    return listing?.filter((item) => {
       return Object.keys(filters).every((key) => {
-        const value = item[key];
-        const searchValue = filters[key];
-
-        if (value && value == searchValue) {
+        if (item[key] == filters[key]) {
           return true;
         }
-
+        
         if (key === "fromDate") {
           const date = `${item.creationTimestamp}`.split(" ")[0];
-          if (new Date(searchValue).getTime() - new Date(date).getTime() < 0) {
+          if (new Date(filters[key]).getTime() - new Date(date).getTime() < 0) {
             return true;
           }
         }
 
         if (key === "toDate") {
           const date = `${item.creationTimestamp}`.split(" ")[0];
-          if (new Date(searchValue).getTime() - new Date(date).getTime() > 0) {
+          if (new Date(filters[key]).getTime() - new Date(date).getTime() > 0) {
             return true;
           }
         }
@@ -186,5 +183,5 @@ export const handleDataFiltered = (filters = {}, data) => {
       });
     });
   }
-  return data;
+  return listing;
 };
