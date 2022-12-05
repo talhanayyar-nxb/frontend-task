@@ -35,12 +35,7 @@ const LoggerPage = ({ loggerListing }) => {
   useEffect(() => {
     if (filteredRows?.length) {
       if(itemOffset > filteredRows?.length){
-        let offSet = itemOffset;
-        // keeps on decreasing the offset by 10 if the current offset is bigger then the listing records
-        while(offSet >= filteredRows?.length){
-          offSet = offSet - 10;
-        }
-        setItemOffset(offSet);
+        setItemOffset(0);
       }
       const endOffset = itemOffset + itemsPerPage;
       const currentLogs = filteredRows.slice(itemOffset, endOffset);
