@@ -15,7 +15,9 @@ export const LoggerTable = ({
   currentItems,
   setCurrentItems,
   pageCount,
-  handlePageClick
+  handlePageClick,
+  itemOffset,
+  setItemOffset,
 }) => {
   const [sorted, setSorted] = useState({ sorted: "id", reversed: false });
 
@@ -134,18 +136,20 @@ export const LoggerTable = ({
         </tbody>
       </table>
       {currentItems && currentItems.length > 0 ? (
-        <ReactPaginate
-          breakLabel="..."
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={pageCount}
-          renderOnZeroPageCount={null}
-          containerClassName="pagination mt-3 pb-3"
-          pageLinkClassName="page-num"
-          previousLinkClassName="page-num"
-          nextLinkClassName="page-num"
-          activeLinkClassName="active"
-        />
+        pageCount > 1 ? (
+          <ReactPaginate
+            breakLabel="..."
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            renderOnZeroPageCount={null}
+            containerClassName="pagination mt-3 pb-3"
+            pageLinkClassName="page-num"
+            previousLinkClassName="page-num"
+            nextLinkClassName="page-num"
+            activeLinkClassName="active"
+          />
+        ) : null
       ) : (
         <div>No results found</div>
       )}

@@ -35,7 +35,7 @@ export function LoggerFilter({ loggerListing, handleFilters, setFilters }) {
       setFilters({});
       return;
     }
-    
+
     // prepares the filter with every incoming search filter
     handleFilters({
       ...(employeeName && { employeeName }),
@@ -49,12 +49,12 @@ export function LoggerFilter({ loggerListing, handleFilters, setFilters }) {
 
   // called when delete all filters button is clicked
   const resetFilter = () => {
-    setEmployeeName('');
-    setActionType('');
-    setApplicationType('');
-    setFromDate('');
-    setToDate('');
-    setApplicationId('');
+    setEmployeeName("");
+    setActionType("");
+    setApplicationType("");
+    setFromDate("");
+    setToDate("");
+    setApplicationId("");
     return;
   };
 
@@ -160,15 +160,16 @@ export function LoggerFilter({ loggerListing, handleFilters, setFilters }) {
               Search
             </button>
           </div>
-          <div className="w-20 me-2">
-            <button
-              type="submit"
-              onClick={() => resetFilter()}
-              className="btn btn-danger btn-elevate d-block w-20"
-            >
-              <FaTimesCircle />
-            </button>
-          </div>
+          {employeeName || applicationId || applicationType || actionType || fromDate || toDate ? 
+            <div className="w-20 me-2">
+              <button
+                type="submit"
+                onClick={() => resetFilter()}
+                className="btn btn-danger btn-elevate d-block w-20"
+              >
+                <FaTimesCircle />
+              </button>
+            </div> : null}
         </div>
       </div>
     </>
